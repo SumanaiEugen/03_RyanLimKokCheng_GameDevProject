@@ -12,10 +12,16 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody PlayerRb;
     public Animator PlayerAni;
+
+    public AudioClip[] audiocliparray;
+    private AudioSource audiosource;
+
+    public GameObject playerobj;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audiosource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -111,4 +117,24 @@ public class PlayerController : MonoBehaviour
             jumpcounter = 0;
         }
     }
+    /*
+    //player follow mouse
+    void playerMouse()
+    {
+        //Plane facing mouse
+        Plane playerplane = new Plane(Vector3.up, transform.position);
+        Ray ray = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
+        float hitDist = 0.0f;
+
+        if (playerplane.Raycast(ray, out hitDist))
+        {
+            Vector3 targetPoint = ray.GetPoint(hitDist);
+            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+            targetRotation.x = 0;
+            targetRotation.z = 0;
+            //rotate by 7 units/sec
+            playerobj.transform.rotation = Quaternion.Slerp(playerobj.transform.rotation, targetRotation, 7f * Time.deltaTime);
+        }   
+    }
+    */
 }
