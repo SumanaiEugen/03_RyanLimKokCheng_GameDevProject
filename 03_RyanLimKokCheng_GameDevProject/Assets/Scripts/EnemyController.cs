@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     public NavMeshAgent Enemy;
-    public Transform Player;
+    public GameObject Player;
 
     float MaxDist = 2f;
 
@@ -20,31 +20,27 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //target player position
-        Enemy.SetDestination(Player.position);
+        //On Spawn Focus Player
+        Enemy.SetDestination(Player.transform.position);
+        //when near or far from player
+        FocusingPlayer();
+    }
 
+    void FocusingPlayer()
+    {
         //near player
-        if(Vector3.Distance(transform.position,Player.position) <= MaxDist)
+        if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDist)
         {
             Enemy.isStopped = true;
             Enemyani.SetTrigger("Attack");
         }
         //not near player
-        else if(Vector3.Distance(transform.position, Player.position) >= MaxDist)
+        else if (Vector3.Distance(transform.position, Player.transform.position) >= MaxDist)
         {
             Enemy.isStopped = false;
-            Enemy.SetDestination(Player.position);
+            Enemy.SetDestination(Player.transform.position);
             Enemyani.SetBool("Walk", true);
         }
     }
-    /*
-    IEnumerator AfterAttack()
-    {
-        yield return new WaitForSeconds(2);
-        Enemy.isStopped = false;
-        Enemy.SetDestination(Player.position);
-        Enemyani.SetBool("Walk", true);
-    
-    }
-    */
+
 }
